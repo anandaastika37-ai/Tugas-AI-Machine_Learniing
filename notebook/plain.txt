@@ -1,0 +1,32 @@
+Judul : Prediksi Penyakit Jantung
+dataset :https://www.kaggle.com/code/yousefzahran/heart-disease-prediction/notebook?select=heart.csv
+Jumlah Dataset : 1025 Rows  x 14 Collumns
+
+
+
+data info
+
+age ->	Numerical -> Usia
+sex ->	Binary categorical ->	Jenis kelamin
+cp ->	Categorical  ->	Jenis nyeri dada
+trestbps ->	Numerical -> Tekanan darah
+chol ->	Numerical -> Kolesterol
+fbs -> Binary categorical -> Gula darah
+restecg -> Categorical ->	Hasil EKG
+thalach ->	Numerical ->	Denyut jantung
+exang ->	Binary categorical ->	Angina saat olahraga
+oldpeak ->	Numerical ->	Depresi ST
+slope ->	Ordinal categorical ->	Kemiringan ST
+ca ->	Discrete numerical ->	Jumlah pembuluh darah
+thal ->	Categorical	Kategori -> hasil pemeriksaan
+target ->	Binary categorical ->	Label prediksi
+
+raw data:
+Total Missing Values: 0
+Total Duplicate Rows: 723
+
+
+
+Jenis Pendekatan : Supervised
+Jenis Permasalahan : clasification
+algorit
