@@ -1,42 +1,87 @@
 import pandas as pd
 
-data = pd.read_csv('../data/heart.csv')
+data = pd.read_csv('../../data/heart.csv')
 dataFrame = pd.DataFrame(data)
+
 
 class UnderstandingData:
     def __init__(self , dataFrame):
         self.df = dataFrame
     def checkStructure(self):
-        print("DATASET INFORMATION")
-        self.df.info()
-        print(f"\nJumlah baris dan kolom : {self.df.shape}")
-        print(f"Jumlah seluruh data   : {self.df.size}")
-        print(f"\nDaftar kolom   : {self.df.columns.tolist()}")
-        print(f"Jumlah dimensi : {self.df.ndim}")
-    def checkData(self):
-        print(self.df.head(10)) #10 data teratas
-        print(self.df.tail(10)) #10 data paling bawah
-        print(self.df.sample(10, random_state=42)) #10 data acak
-        print(self.df[["age" , 'thalach']]) # kolom age & thalach
-        print(self.df.loc[self.df["age"] > 50]) # filter umur lebih dari 50
-        largest = self.df.nlargest(5, "chol").reset_index(drop=True)
-        smallest = self.df.nsmallest(5, "chol").reset_index(drop=True)
-        print(largest / smallest)
-    def dataType(self):
-        print("DATA TYPES ANALYSIS")
-        print("\n1. Tipe Data Setiap Kolom")
-        print(self.df.dtypes)
-        print("\n2. Distribusi Tipe Data")
-        print(self.df.dtypes.value_counts())
-        print("\n3. Kolom Numerikal")
-        print(self.df.select_dtypes(include=["number"]).columns.tolist())
+        rowsAndColumns = self.df.shape
+        allData = self.df.size
+        structure = self.df.info()
+        print(f"Jumlah Baris Dan Kolom : {rowsAndColumns}")
+        print(f"Jumlah Semua Data : {allData}")
+        print(f"Stuktur Tabel : {structure}")
+    def checkTypeData(self):
+        typeData = self.df.dtypes
+        typeDataNumerical = self.df.select_dtypes(include=["number"])
+        countTypeData = self.df.dtypes.value_counts()
+        print(f"Tipe Data : {typeData}")
+        print(f"Tipe Data Number :{typeDataNumerical}")
+        print(f"Jumlah Setiap Type Data : {countTypeData}")
+    def checkColumnNames(self):
+        collumns = self.df.columns
+        collumnsDuplicated = self.df.columns.duplicated()
+        listCollums = self.df.columns.tolist()
+        print(f"Semua Kolom :{collumns}")
+        print(f"Kolom Duplikat :{collumnsDuplicated}")
+        print(f"List Nama Kolom : {listCollums}")
+    def checkDataSample(self):
+        headData = self.df.head(10)
+        tailData = self.df.tail(10)
+        randomData = self.df.sample(10)
+        indexData = self.df.iloc[1]
+        describeData = self.df.describe()
+        print(f"{headData }")
+        print(f"{tailData}")
+        print(f"{randomData}")
+        print(f"{indexData}")
+        print(f"{describeData}")
+    def checkIndex(self):
+        index = self.df.index
+        indexDtype = self.df.index.dtype
+        indexUnique = self.df.index.is_unique
+        indexMonotonic = self.df.index.is_monotonic_increasing
+        indexDuplicated = self.df.index.duplicated().tolist()
+        indexTerkecil = self.df.index.min()
+        indexTerbesar = self.df.index.max()
+        print(f"{index}")
+        print(f"{indexDtype}")
+        print(f"{indexUnique}")
+        print(f"{indexMonotonic}")
+        print(f"{indexDuplicated}")
+        print(f"{indexTerbesar}")
+        print(f"{indexTerkecil}")
+    def checkMemoryUsage(self):
+        memoryUse = self.df.memory_usage()
+        memoryUseDetail = self.df.memory_usage(deep=True)
+        estiminationMemory = self.df.info(memory_usage="deep")
+        print(f"{memoryUse}")
+        print(f"{memoryUseDetail}")
+        print(f"{estiminationMemory}")
+    def checkEmptyData(self):
+        emptyData = self.df.empty
+        print(f"{emptyData}")
+    def checkConstantColumns(self):
+        countUniqValue = self.df.nunique()
+        listUniqValue = self.df.unique()
+        valueCount = self.df.value_counts()
+        inputNaN = self.df.dropna=False
+        print(f"{countUniqValue}")
+        print(f"{listUniqValue}")
+        print(f"{valueCount}")
+        print(f"{inputNaN}")
+
+        
 
 
-
-init = UnderstandingData(dataFrame)
-# print(init.checkData())
-# print(init.checkStructure())
-# print(init.dataType())
-# print(init.missingValue())
-# print(init.duplicatedValue())
-print(init.StatistikDeskriptif())
+init = UnderstandingData(dataFrame=dataFrame)
+init.checkStructure()
+init.checkTypeData()
+init.checkColumnNames()
+init.checkDataSample()
+init.checkIndex()
+init.checkMemoryUsage()
+init.checkEmptyData()
