@@ -1,7 +1,8 @@
 import pandas as pd
 
-data = pd.read_csv('../../data/heart.csv')
-dataFrame = pd.DataFrame(data)
+from pathlib import Path
+
+DATA_PATH = Path(__file__).resolve().parents[2] / "data" / "cardio_train.csv"
 
 
 class UnderstandingData:
@@ -44,7 +45,7 @@ class UnderstandingData:
         indexDtype = self.df.index.dtype
         indexUnique = self.df.index.is_unique
         indexMonotonic = self.df.index.is_monotonic_increasing
-        indexDuplicated = self.df.index.duplicated().tolist()
+        indexDuplicated = self.df.index.duplicated()
         indexTerkecil = self.df.index.min()
         indexTerbesar = self.df.index.max()
         print(f"{index}")
@@ -66,7 +67,7 @@ class UnderstandingData:
         print(f"{emptyData}")
     def checkConstantColumns(self):
         countUniqValue = self.df.nunique()
-        listUniqValue = self.df.unique()
+        listUniqValue = self.df['age'].unique()
         valueCount = self.df.value_counts()
         inputNaN = self.df.dropna=False
         print(f"{countUniqValue}")
@@ -77,11 +78,7 @@ class UnderstandingData:
         
 
 
-init = UnderstandingData(dataFrame=dataFrame)
-init.checkStructure()
-init.checkTypeData()
-init.checkColumnNames()
-init.checkDataSample()
-init.checkIndex()
-init.checkMemoryUsage()
-init.checkEmptyData()
+if __name__ == "__main__":
+    dataFrame = pd.read_csv(DATA_PATH, sep=";")
+    init = UnderstandingData(dataframe=dataFrame)
+    init.cardinalityAnalysis()
