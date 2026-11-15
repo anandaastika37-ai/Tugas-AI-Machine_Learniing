@@ -15,12 +15,6 @@ class DataAnalysis:
         numeric = self.df.select_dtypes(include="number")
         print(numeric.describe())
         print(numeric.corr())
-    def categoricalAnalysis(self):
-        categorical = self.df.select_dtypes(include="object")
-        for col in categorical.columns:
-            print(col)
-            print(categorical[col].value_counts())
-            print()
     def missingAnalysis(self):
         missing = self.df.isnull().sum()
         isNan = self.df.isna().sum()
@@ -33,44 +27,6 @@ class DataAnalysis:
         print(jumlah)
         if jumlah > 0:
             print(self.df[self.df.duplicated()])
-    def uniqueAnalysis(self):
-        result = {}
-        totalRows = len(self.df)
-        for collum in self.df.columns:
-            series = self.df[collum]
-            uniqeValue = series.unique()
-            nuniqeValue = series.nunique()
-            frequency = series.value_counts(dropna=False)
-            percentage = (series.value_counts(normalize=True , dropna=False) * 100)
-            mode = series.mode().tolist()
-            if totalRows > 0:
-                uniquePercen = (nuniqeValue / totalRows * 100)
-            else : 
-                uniquePercen = 0
-            result[collum] = {
-                "UniqCount" : nuniqeValue,
-                "percenUniq" : uniquePercen,
-                "missngCount" : series.isna().sum(),
-                "mode" : mode,
-                "uniqueValue" : uniqeValue.tolist()
-            }
-
-            print(f"{6*'='}", "Unique Analysis", (f"{6*'='}"))
-            print(f"\n Kolom = {collum}")
-            print(f"Unique Count : {nuniqeValue}")
-            print(f"Unique Percentage : {uniquePercen:.2f}%")
-            print(f"Missing Count: {series.isna().sum()}")
-            print(f"Mode : {mode}")
-
-            print("\nUnique Values:")
-            print(uniqeValue)
-            print("\nFrequency Distribution:")
-
-            print(pd.DataFrame({
-                'frequency': frequency,
-                'percentage': percentage.round(2)
-            }))
-        return pd.DataFrame.from_dict(result , orient="index")
     def cardinalityAnalysis(self):
         result = {}
         totalRows = len(self.df)
@@ -203,33 +159,6 @@ class DataAnalysis:
                 imbalanceRatio = validCount.iloc[0] / validCount.iloc[-1]
                 print(f"\nImbalance Ratio  : {imbalanceRatio:.2f}:1")
             return report
-    
-    def classBalanceAnalysis(self):
-            target = 'cardio'
-            classCount = self.df[target].value_counts()
-            classPercentage = self.df[target].value_counts(normalize=True) * 100
-            classBalance = pd.DataFrame({
-                'Count': classCount,
-                'Percentage': classPercentage
-            })
-            print("\nDistribusi kelas:")
-            print(classBalance)
-            majorityClass = classCount.idxmax()
-            minorityClass = classCount.idxmin()
-            majorityCount = classCount.max()
-            minorityCount = classCount.min()
-            print(f"Kelas mayoritas: {majorityClass}")
-            print(f"Jumlah mayoritas: {majorityCount}")
-            print(f"Kelas minoritas: {minorityClass}")
-            print(f"Jumlah minoritas: {minorityCount}")
-            imbalanceRatio = majorityCount / minorityCount
-            print(f"Imbalance Ratio: {imbalanceRatio:.2f}:1")
-            if imbalanceRatio <= 1.5:
-                print("Status: Relatif seimbang")
-            elif imbalanceRatio <= 3:
-                print("Status: Moderately imbalanced")
-            else:
-                print("Status: Highly imbalanced")
     def dataQualityAnalysis(self):
             missing = self.df.isnull().sum()
             totalMissing = missing.sum()

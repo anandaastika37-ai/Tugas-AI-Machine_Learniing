@@ -1,16 +1,13 @@
-
 import numpy as np
 import pandas as pd
 
 
 class DataValidation:
-
     def __init__(self, X_train, X_test, y_train=None, y_test=None):
         self.X_train = X_train
         self.X_test = X_test
         self.y_train = y_train
         self.y_test = y_test
-
     def validateAll(self):
         assert len(self.X_train) > 0, "Training data kosong"
         assert len(self.X_test) > 0, "Testing data kosong"

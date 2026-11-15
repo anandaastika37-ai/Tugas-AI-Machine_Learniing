@@ -1,4 +1,5 @@
 from sklearn.model_selection import train_test_split
+
 class DataSpliting:
     def __init__(self, X, y):
         self.X = X
