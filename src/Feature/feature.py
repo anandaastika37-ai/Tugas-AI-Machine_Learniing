@@ -1,11 +1,56 @@
-import pandas as pd 
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.preprocessing import StandardScaler
 
-data = pd.read_csv('../../data/heart_cleaned.csv' , sep=';')
-dataframe = pd.DataFrame(data)
+import numpy as np
+import pandas as pd
 
-y = dataframe['cardio']
-x = dataframe.drop(columns=['cardio'])
-print(list(x.columns))
-print(y.name)
+
+class feature:
+
+    def __init__(self, dataframe):
+        self.df = dataframe.copy()
+
+    def createAgeYear(self):
+
+        self.df['age_year'] = (
+            self.df['age'] / 365.25
+        ).astype(int)
+
+        return self
+
+    def createBMI(self):
+
+        height_meter = self.df['height'] / 100
+
+        self.df['BMI'] = np.where(
+            height_meter > 0,
+            self.df['weight'] / height_meter ** 2,
+            np.nan
+        )
+
+        return self
+
+    def createPulsePressure(self):
+
+        self.df['pulse_pressure'] = (
+            self.df['ap_hi'] - self.df['ap_lo']
+        )
+
+        return self
+
+    def ageBinning(self):
+
+        self.df['age_group'] = pd.cut(
+            self.df['age_year'],
+            bins=[0, 30, 45, 60, 120],
+            labels=[
+                'Muda',
+                'Dewasa',
+                'Paruh baya',
+                'Lansia'
+            ]
+        )
+
+        return self
+
+    def getFeatures(self):
+
+        return self.df

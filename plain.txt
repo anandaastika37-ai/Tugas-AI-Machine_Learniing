@@ -1,32 +1,35 @@
-Judul : Prediksi Penyakit Jantung
-dataset :https://www.kaggle.com/code/yousefzahran/heart-disease-prediction/notebook?select=heart.csv
-Jumlah Dataset : 1025 Rows  x 14 Collumns
+Judul : Prediksi Penyakit Jantung cardio
+dataset :https://www.kaggle.com/datasets/sulianova/cardiovascular-disease-dataset 
+Jumlah Dataset : 7000 Rows  x 13 Collumns
 
+--Data Info--
 
+age	Umur
+gender =	Jenis kelamin dalam encoding
+height =	Tinggi badan
+weight =	Berat badan
+ap_hi  =	Tekanan darah sistolik
+ap_lo  =	Tekanan darah diastolik
+cholesterol = Tingkat kolesterol
+gluc  =	    Tingkat glukosa
+smoke = 	Status merokok
+alco  = 	Konsumsi alkohol
+active =	Aktivitas fisik
+cardio =	Target penyakit jantung
 
-data info
-
-age ->	Numerical -> Usia
-sex ->	Binary categorical ->	Jenis kelamin
-cp ->	Categorical  ->	Jenis nyeri dada
-trestbps ->	Numerical -> Tekanan darah
-chol ->	Numerical -> Kolesterol
-fbs -> Binary categorical -> Gula darah
-restecg -> Categorical ->	Hasil EKG
-thalach ->	Numerical ->	Denyut jantung
-exang ->	Binary categorical ->	Angina saat olahraga
-oldpeak ->	Numerical ->	Depresi ST
-slope ->	Ordinal categorical ->	Kemiringan ST
-ca ->	Discrete numerical ->	Jumlah pembuluh darah
-thal ->	Categorical	Kategori -> hasil pemeriksaan
-target ->	Binary categorical ->	Label prediksi
 
 raw data:
 Total Missing Values: 0
-Total Duplicate Rows: 723
+Total Duplicate Rows: 0
 
 
 
 Jenis Pendekatan : Supervised
 Jenis Permasalahan : clasification
-algorit
+algoritma : SVM
+                 Model  Accuracy  Precision    Recall  F1 Score   ROC AUC
+0                  SVM  0.729232   0.740213  0.705893  0.722630  0.785559
+1        Random Forest  0.705589   0.712203  0.689490  0.700628  0.765185
+2  Logistic Regression  0.719357   0.738692  0.678340  0.707214  0.782199
+3                  KNN  0.671464   0.679419  0.648608  0.663643  0.718402
+4        Decision Tree  0.631304   0.630862  0.631991  0.631410  0.631294
