@@ -31,24 +31,11 @@ class FinalModelEvaluation:
         if self.y_pred is None:
             self.predict()
         self.results = {
-            "Accuracy": accuracy_score(
-                self.y_test, self.y_pred
-            ),
-            "Precision": precision_score(
-                self.y_test, self.y_pred,
-                zero_division=0
-            ),
-            "Recall": recall_score(
-                self.y_test, self.y_pred,
-                zero_division=0
-            ),
-            "F1 Score": f1_score(
-                self.y_test, self.y_pred,
-                zero_division=0
-            ),
-            "ROC AUC": roc_auc_score(
-                self.y_test, self.y_score
-            )
+            "Accuracy": accuracy_score(self.y_test, self.y_pred),
+            "Precision": precision_score(self.y_test, self.y_pred,zero_division=0),
+            "Recall": recall_score(self.y_test, self.y_pred,zero_division=0),
+            "F1 Score": f1_score(self.y_test, self.y_pred,zero_division=0),
+            "ROC AUC": roc_auc_score(self.y_test, self.y_score)
         }
 
         return self.results
@@ -59,20 +46,13 @@ class FinalModelEvaluation:
 
         print("\nCLASSIFICATION REPORT")
         print(
-            classification_report(
-                self.y_test,
-                self.y_pred,
-                zero_division=0
-            )
+            classification_report(self.y_test,self.y_pred,zero_division=0)
         )
 
     def confusionMatrix(self):
-
         if self.y_pred is None:
             self.predict()
-
         cm = confusion_matrix(self.y_test,self.y_pred)
-
         sns.heatmap(cm,annot=True,fmt="d",cmap="Blues",xticklabels=[0, 1],yticklabels=[0, 1])
         plt.title("Confusion Matrix")
         plt.xlabel("Predicted Label")
@@ -83,17 +63,12 @@ class FinalModelEvaluation:
         return cm
 
     def rocCurve(self):
-
         if self.y_pred is None:
             self.predict()
-
         fpr, tpr, thresholds = roc_curve(self.y_test,self.y_score)
         auc = roc_auc_score(self.y_test,self.y_score)
-
         plt.plot(fpr, tpr,label=f"ROC Curve (AUC = {auc:.4f})")
-
         plt.plot([0, 1], [0, 1],linestyle="--",label="Random Classifier")
-
         plt.xlabel("False Positive Rate")
         plt.ylabel("True Positive Rate")
         plt.title("ROC Curve")

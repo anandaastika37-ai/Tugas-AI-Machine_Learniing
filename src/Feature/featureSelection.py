@@ -10,7 +10,7 @@ class FeatureSelection:
 
     def selectFeatures(self, y_train, k=10):
         k = min(k, self.X_train.shape[1])
-        self.selector = SelectKBest(score_func=mutual_info_classif,k=k)
+        self.selector = SelectKBest(score_func=lambda X, y: mutual_info_classif(X, y, random_state=42), k=k)
         self.X_train_selected = self.selector.fit_transform(self.X_train, y_train)
         self.X_test_selected = self.selector.transform(self.X_test)
         self.selected_features = self.feature_names[self.selector.get_support()]

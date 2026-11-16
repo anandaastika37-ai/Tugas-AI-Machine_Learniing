@@ -69,7 +69,7 @@ class UnderstandingData:
         countUniqValue = self.df.nunique()
         listUniqValue = self.df['age'].unique()
         valueCount = self.df.value_counts()
-        inputNaN = self.df.dropna=False
+        inputNaN = self.df.value_counts(dropna=False)
         print(f"{countUniqValue}")
         print(f"{listUniqValue}")
         print(f"{valueCount}")
@@ -81,4 +81,3 @@ class UnderstandingData:
 if __name__ == "__main__":
     dataFrame = pd.read_csv(DATA_PATH, sep=";")
     init = UnderstandingData(dataframe=dataFrame)
-    init.cardinalityAnalysis()

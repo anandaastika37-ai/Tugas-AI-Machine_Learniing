@@ -8,38 +8,31 @@ from src.preprocessing.preprocessing import Preprocessing
 from src.Feature.featureSelection import FeatureSelection
 from src.preprocessing.dataValidation import DataValidation
 from src.model.modelSelection import ModelSelection
-from src.model.modelTrening import ModelTraining
 from src.model.hyperparameterTuning import HyperparameterTuning
 
 from src.model.finalEvaluation import FinalModelEvaluation
 
 
 if __name__ == "__main__":
+    df = pd.read_csv(Path(__file__).parent / "data" / "cardio_cleaned.csv")
 
-    # 1. Load Data
-    df = pd.read_csv(Path(__file__).parent / "data" / "heart_cleaned.csv",sep=";")
-
-    # 2. Feature Engineering
-    df = (feature(df).createAgeYear().createBMI().createPulsePressure().ageBinning().df)
+    df = (feature(df).createAgeYear().createBMI().createPulsePressure().ageBinning().dropAge().getFeatures())
     print(df.head(10))
     print(df.columns)
 
-    # 3. Data Splitting
-    X = df.drop(columns="cardio")
+    X = df.drop(columns=["cardio", "id"])
     y = df["cardio"]
 
     X_train, X_test, y_train, y_test = (DataSpliting(X, y).spliting())
 
-    # 4. Preprocessing
     preprocessing = Preprocessing(X_train, X_test)
     preprocessing.buildPipeline()
     X_train_processed, X_test_processed = (preprocessing.getProcessedData())
 
-    # 5. Feature Selection
     feature_selection = FeatureSelection(X_train_processed,X_test_processed,preprocessing.feature_names).selectFeatures(y_train, k=10)
     X_train, X_test = feature_selection.getSelectedFeatures()
 
-    # 6. Data Validation
+
     DataValidation(X_train, X_test, y_train, y_test).validateAll()
 
     # 7. Results
@@ -56,11 +49,7 @@ if __name__ == "__main__":
     best_model_name = results.iloc[0]["Model"]
     best_model = selection.models[best_model_name]
 
-    # 1. Model Training
-    training = ModelTraining(model=best_model,X_train=X_train,y_train=y_train)
-    trained_model = training.train()
 
-    # 2. Hyperparameter Tuning
     tuning = HyperparameterTuning(X_train=X_train,y_train=y_train)
 
     best_model = tuning.tune()

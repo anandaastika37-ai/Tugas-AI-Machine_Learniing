@@ -8,6 +8,7 @@ class DataValidation:
         self.X_test = X_test
         self.y_train = y_train
         self.y_test = y_test
+
     def validateAll(self):
         assert len(self.X_train) > 0, "Training data kosong"
         assert len(self.X_test) > 0, "Testing data kosong"

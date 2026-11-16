@@ -10,7 +10,7 @@ class feature:
     def createAgeYear(self):
         self.df['age_year'] = (self.df['age'] / 365.25).astype(int)
         return self
-
+    
     def createBMI(self):
         height_meter = self.df['height'] / 100
         self.df['BMI'] = np.where(height_meter > 0,self.df['weight'] / height_meter ** 2,np.nan)
@@ -23,8 +23,12 @@ class feature:
     def ageBinning(self):
         self.df['age_group'] = pd.cut(
             self.df['age_year'],
-            bins=[0, 30, 45, 60, 120],
-            labels=['Muda','Dewasa','Paruh baya','Lansia'])
+            bins=[0, 40, 50, 60, 120],
+            labels=['<=40', '41-50', '51-60', '61+'])
+        return self
+    
+    def dropAge(self):
+        self.df = self.df.drop(columns='age')
         return self
     
     def getFeatures(self):

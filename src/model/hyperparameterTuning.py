@@ -10,7 +10,7 @@ class HyperparameterTuning:
         self.model = SVC()
         self.param_distributions = {
             "C": [0.1, 1, 10, 100],
-            "kernel": ["linear", "rbf"],
+            "kernel": ["rbf"],
             "gamma": ["scale", "auto", 0.001, 0.01, 0.1],
             "class_weight": [None, "balanced"]}
         self.search = None
