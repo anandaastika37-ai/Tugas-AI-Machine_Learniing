@@ -6,7 +6,6 @@ from sklearn.pipeline import Pipeline
 
 
 class Preprocessing:
-
     def __init__(self, X_train, X_test):
         self.X_train = X_train.copy()
         self.X_test = X_test.copy()

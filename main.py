@@ -1,4 +1,3 @@
-
 import pandas as pd
 from pathlib import Path
 
@@ -32,10 +31,7 @@ if __name__ == "__main__":
     feature_selection = FeatureSelection(X_train_processed,X_test_processed,preprocessing.feature_names).selectFeatures(y_train, k=10)
     X_train, X_test = feature_selection.getSelectedFeatures()
 
-
     DataValidation(X_train, X_test, y_train, y_test).validateAll()
-
-    # 7. Results
     print("\nSelected Features:")
     print(feature_selection.getSelectedFeatureNames())
     print("\nFeature Scores:")
@@ -43,35 +39,23 @@ if __name__ == "__main__":
     print("\nTraining Shape:", X_train.shape)
     print("Testing Shape:", X_test.shape)
     
+    # Model Selection
     selection = ModelSelection(X_train, y_train)
     results = selection.compareModels()
+    results = results.sort_values(by="Accuracy",ascending=False).reset_index(drop=True)
     print(results)
+    # Best Model
     best_model_name = results.iloc[0]["Model"]
     best_model = selection.models[best_model_name]
     print("\nSelected Model:", best_model_name)
-    tuning = HyperparameterTuning(
-        model=best_model,
-        X_train=X_train,
-        y_train=y_train
-    )
-
+    # Hyperparameter Tuning
+    tuning = HyperparameterTuning(model=best_model,X_train=X_train,y_train=y_train)
     best_model = tuning.tune()
-
-    evaluation = FinalModelEvaluation(
-        model=best_model,
-        X_test=X_test,
-        y_test=y_test
-    )
-
+    # Final Evaluation
+    evaluation = FinalModelEvaluation(model=best_model,X_test=X_test,y_test=y_test)
     results = evaluation.evaluate()
-
+    # Prediction
     y_pred = best_model.predict(X_test)
-
-    hasil = pd.DataFrame({
-        "Aktual": y_test.values,
-        "Prediksi": y_pred
-    })
-
+    hasil = pd.DataFrame({"Aktual": y_test.values,"Prediksi": y_pred})
     hasil["Benar"] = hasil["Aktual"] == hasil["Prediksi"]
-
     print(hasil.head(20))

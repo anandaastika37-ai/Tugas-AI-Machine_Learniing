@@ -20,7 +20,7 @@ class ModelSelection:
             "SVM": SVC(random_state=42)
         }
         self.cv = StratifiedKFold(n_splits=5,shuffle=True,random_state=42)
-
+        
     def compareModels(self):
         results = []
         scoring = ["accuracy","precision","recall","f1","roc_auc"]

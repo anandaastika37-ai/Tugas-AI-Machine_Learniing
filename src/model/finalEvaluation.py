@@ -1,5 +1,3 @@
-
-import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -12,7 +10,6 @@ class FinalModelEvaluation:
         self.model = model
         self.X_test = X_test
         self.y_test = y_test
-
         self.y_pred = None
         self.y_score = None
         self.results = {}
@@ -20,9 +17,7 @@ class FinalModelEvaluation:
     def predict(self):
         self.y_pred = self.model.predict(self.X_test)
         if hasattr(self.model, "predict_proba"):
-            self.y_score = self.model.predict_proba(
-                self.X_test
-            )[:, 1]
+            self.y_score = self.model.predict_proba(self.X_test)[:, 1]
         else:
             self.y_score = self.model.decision_function(self.X_test)
         return self.y_pred
@@ -37,17 +32,13 @@ class FinalModelEvaluation:
             "F1 Score": f1_score(self.y_test, self.y_pred,zero_division=0),
             "ROC AUC": roc_auc_score(self.y_test, self.y_score)
         }
-
         return self.results
 
     def classificationReport(self):
         if self.y_pred is None:
             self.predict()
-
         print("\nCLASSIFICATION REPORT")
-        print(
-            classification_report(self.y_test,self.y_pred,zero_division=0)
-        )
+        print(classification_report(self.y_test,self.y_pred,zero_division=0))
 
     def confusionMatrix(self):
         if self.y_pred is None:
@@ -59,7 +50,6 @@ class FinalModelEvaluation:
         plt.ylabel("Actual Label")
         plt.tight_layout()
         plt.show()
-
         return cm
 
     def rocCurve(self):
