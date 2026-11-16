@@ -36,17 +36,17 @@ if __name__ == "__main__":
     X_train_processed, X_test_processed = (preprocessing.getProcessedData())
 
     # 5. Feature Selection
-    selection = FeatureSelection(X_train_processed,X_test_processed,preprocessing.feature_names).selectFeatures(y_train, k=10)
-    X_train, X_test = selection.getSelectedFeatures()
+    feature_selection = FeatureSelection(X_train_processed,X_test_processed,preprocessing.feature_names).selectFeatures(y_train, k=10)
+    X_train, X_test = feature_selection.getSelectedFeatures()
 
     # 6. Data Validation
     DataValidation(X_train, X_test, y_train, y_test).validateAll()
 
     # 7. Results
     print("\nSelected Features:")
-    print(selection.getSelectedFeatureNames())
+    print(feature_selection.getSelectedFeatureNames())
     print("\nFeature Scores:")
-    print(selection.getFeatureScores())
+    print(feature_selection.getFeatureScores())
     print("\nTraining Shape:", X_train.shape)
     print("Testing Shape:", X_test.shape)
     
@@ -66,3 +66,9 @@ if __name__ == "__main__":
     best_model = tuning.tune()
     evaluation = FinalModelEvaluation(model=best_model,X_test=X_test,y_test=y_test)
     results = evaluation.evaluate()
+
+    y_pred = best_model.predict(X_test)
+
+    hasil = pd.DataFrame({"Aktual": y_test.values,"Prediksi": y_pred})
+    hasil["Benar"] = hasil["Aktual"] == hasil["Prediksi"]
+    print(hasil.head(20))
