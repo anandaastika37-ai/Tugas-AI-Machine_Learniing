@@ -26,10 +26,10 @@ Total Duplicate Rows: 0
 
 Jenis Pendekatan : Supervised
 Jenis Permasalahan : clasification
-algoritma : Random Forest
+algoritma : SVM
                  Model  Accuracy  Precision    Recall  F1 Score   ROC AUC
-0        Random Forest  0.694355   0.695846  0.690066  0.692924  0.751370
-1                  SVM  0.731994   0.753417  0.689387  0.719959  0.781090
-2                  KNN  0.693408   0.696767  0.684419  0.690512  0.742841
-3  Logistic Regression  0.728403   0.752046  0.681166  0.714815  0.791189
-4        Decision Tree  0.634405   0.640899  0.610715  0.625407  0.635474
+0                  SVM  0.729232   0.740213  0.705893  0.722630  0.785559
+1        Random Forest  0.705589   0.712203  0.689490  0.700628  0.765185
+2  Logistic Regression  0.719357   0.738692  0.678340  0.707214  0.782199
+3                  KNN  0.671464   0.679419  0.648608  0.663643  0.718402
+4        Decision Tree  0.631304   0.630862  0.631991  0.631410  0.631294

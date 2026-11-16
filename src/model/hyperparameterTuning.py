@@ -7,7 +7,7 @@ class HyperparameterTuning:
     def __init__(self, X_train, y_train):
         self.X_train = X_train
         self.y_train = y_train
-        self.model = SVC()
+        self.model = self.model
         self.param_distributions = {
             "C": [0.1, 1, 10, 100],
             "kernel": ["rbf"],

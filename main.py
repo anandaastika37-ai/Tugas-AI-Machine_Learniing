@@ -43,21 +43,35 @@ if __name__ == "__main__":
     print("\nTraining Shape:", X_train.shape)
     print("Testing Shape:", X_test.shape)
     
-    selection = ModelSelection(X_train,y_train)
+    selection = ModelSelection(X_train, y_train)
     results = selection.compareModels()
     print(results)
     best_model_name = results.iloc[0]["Model"]
     best_model = selection.models[best_model_name]
-
-
-    tuning = HyperparameterTuning(X_train=X_train,y_train=y_train)
+    print("\nSelected Model:", best_model_name)
+    tuning = HyperparameterTuning(
+        model=best_model,
+        X_train=X_train,
+        y_train=y_train
+    )
 
     best_model = tuning.tune()
-    evaluation = FinalModelEvaluation(model=best_model,X_test=X_test,y_test=y_test)
+
+    evaluation = FinalModelEvaluation(
+        model=best_model,
+        X_test=X_test,
+        y_test=y_test
+    )
+
     results = evaluation.evaluate()
 
     y_pred = best_model.predict(X_test)
 
-    hasil = pd.DataFrame({"Aktual": y_test.values,"Prediksi": y_pred})
+    hasil = pd.DataFrame({
+        "Aktual": y_test.values,
+        "Prediksi": y_pred
+    })
+
     hasil["Benar"] = hasil["Aktual"] == hasil["Prediksi"]
+
     print(hasil.head(20))
